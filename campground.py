@@ -28,6 +28,18 @@ print(soup.prettify)
 nextmonth = driver.find_element(By.CLASS_NAME, "flatpickr-next-month")
 
 nextmonth.click()
+
+chooseday = driver.find_element(By.CLASS_NAME, "dayContainer")
+chooseday.click()
+
+chooseday2 = driver.find_element(By.CLASS_NAME, "flatpickr-day.nextMonthDay")
+chooseday2.click()
+
+clicksubmit = driver.find_element(By.CLASS_NAME, "block")
+clicksubmit.click()
+
+choosesite = driver.find_element(By.CLASS_NAME, "selectBtn")
+choosesite.click()
 time.sleep(5)
 
 # ActionChains(options).click(element).perform()
