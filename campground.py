@@ -22,8 +22,8 @@ button = driver.find_element("id", "dateRange")
 button.click()
 #time.sleep(5)
 
-soup = BeautifulSoup(request.content, 'html.parser')
-print(soup.prettify)
+#soup = BeautifulSoup(request.content, 'html.parser')
+#print(soup.prettify)
 
 nextmonth = driver.find_element(By.CLASS_NAME, "flatpickr-next-month")
 
@@ -40,6 +40,30 @@ clicksubmit.click()
 
 choosesite = driver.find_element(By.CLASS_NAME, "selectBtn")
 choosesite.click()
+
+firstname = driver.find_element(By.ID, "first-name")
+firstname.click()
+
+firstname.send_keys("test first name")
+
+lastname = driver.find_element(By.ID, "last-name")
+lastname.click()
+lastname.send_keys("test last name")
+
+email = driver.find_element(By.ID, "email")
+email.click()
+email.send_keys("fakeemail@email.com")
+
+phone = driver.find_element(By.ID, "phone")
+phone.click()
+phone.send_keys("1234567890")
+
+terms = driver.find_element(By.ID, "agreed-to-terms")
+terms.click()
+
+submit = driver.find_element(By.ID, "reservation-submit-btn")
+submit.click()
+
 time.sleep(5)
 
 # ActionChains(options).click(element).perform()
