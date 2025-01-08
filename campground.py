@@ -11,22 +11,16 @@ from pathlib import Path
 def createNewEntry():
     service = Service(executable_path="C:\Program Files\chromedriver-win32\chromedriver.exe")
     options = webdriver.ChromeOptions()
+    options.add_argument("--headless=new")
     driver = webdriver.Chrome(service=service, options=options)
 
     driver.get("https://csi-2999-project.onrender.com/reservations")
     request = requests.get("https://csi-2999-project.onrender.com/reservations")
 
-    print(requests)
-
     soup = BeautifulSoup(request.content, 'html.parser')
-    #print(soup.prettify())
 
     button = driver.find_element("id", "dateRange")
     button.click()
-    #time.sleep(5)
-
-    #soup = BeautifulSoup(request.content, 'html.parser')
-    #print(soup.prettify)
 
     nextmonth = driver.find_element(By.CLASS_NAME, "flatpickr-next-month")
 
@@ -67,14 +61,12 @@ def createNewEntry():
     submit = driver.find_element(By.ID, "reservation-submit-btn")
     submit.click()
 
-    tyme.sleep(5)
+   # tyme.sleep(5)
 
 
 
 # get today's date
 today = datetime.today().date()
-print("today is:")
-print(today)
 
 
 # get date last run from file in home directory
@@ -82,25 +74,20 @@ home_dir = Path.home()
 path = home_dir / "dateRefresherLastRun.txt"
 f = open(path, 'r')
 content=f.read()
-print(content)
+
 format = '%Y-%m-%d'
 f.close()
 
 lastRun = datetime.strptime(content, format).date()
-print(lastRun)
-threeDaysLater = lastRun + timedelta(days=3)
-print(threeDaysLater)
+fourDaysLater = lastRun + timedelta(days=4)
 
-if threeDaysLater < today:
+if fourDaysLater < today: # if script hasn't been run in the last 4 days, run it
     createNewEntry()
 
     wr = open(path, 'w')
     text = today.strftime(format)
-    print(text)
     wr.write(text)
     wr.close()
-
-   # f.close
 
 
 
