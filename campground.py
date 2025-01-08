@@ -1,11 +1,7 @@
-import requests
-from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver import ActionChains
-import time as tyme
 from selenium.webdriver.common.by import By
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 
 def createNewEntry():
@@ -15,15 +11,11 @@ def createNewEntry():
     driver = webdriver.Chrome(service=service, options=options)
 
     driver.get("https://csi-2999-project.onrender.com/reservations")
-    request = requests.get("https://csi-2999-project.onrender.com/reservations")
-
-    soup = BeautifulSoup(request.content, 'html.parser')
 
     button = driver.find_element("id", "dateRange")
     button.click()
 
     nextmonth = driver.find_element(By.CLASS_NAME, "flatpickr-next-month")
-
     nextmonth.click()
 
     chooseday = driver.find_element(By.CLASS_NAME, "dayContainer")
@@ -40,7 +32,6 @@ def createNewEntry():
 
     firstname = driver.find_element(By.ID, "first-name")
     firstname.click()
-
     firstname.send_keys("test first name")
 
     lastname = driver.find_element(By.ID, "last-name")
@@ -61,13 +52,8 @@ def createNewEntry():
     submit = driver.find_element(By.ID, "reservation-submit-btn")
     submit.click()
 
-   # tyme.sleep(5)
-
-
-
 # get today's date
 today = datetime.today().date()
-
 
 # get date last run from file in home directory
 home_dir = Path.home()
