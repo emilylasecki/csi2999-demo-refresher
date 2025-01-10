@@ -3,9 +3,20 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from datetime import datetime, timedelta
 from pathlib import Path
+import sys
+import os
+
+def resource_path(relative_path):  # configure so pyinstaller can read path names
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 def createNewEntry():
-    service = Service(executable_path="C:\Program Files\chromedriver-win32\chromedriver.exe")
+    exe_path=resource_path("C:\Program Files\chromedriver-win32\chromedriver.exe")
+    service = Service(executable_path=exe_path)
     options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")
     driver = webdriver.Chrome(service=service, options=options)
@@ -56,8 +67,8 @@ def createNewEntry():
 today = datetime.today().date()
 
 # get date last run from file in home directory
-home_dir = Path.home()
-path = home_dir / "dateRefresherLastRun.txt"
+home_dir = resource_path(Path.home())
+path = resource_path(Path.home() / "dateRefresherLastRun.txt")
 f = open(path, 'r')
 content=f.read()
 
@@ -65,7 +76,7 @@ format = '%Y-%m-%d'
 f.close()
 
 lastRun = datetime.strptime(content, format).date()
-fourDaysLater = lastRun + timedelta(days=4)
+fourDaysLater = lastRun + timedelta(days=3)
 
 if fourDaysLater < today: # if script hasn't been run in the last 4 days, run it
     createNewEntry()
